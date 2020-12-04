@@ -4,8 +4,9 @@ public class FizzBuzz {
        if (number <= 0) {
            return "invalid";
        }
-       boolean fizz = number % 3 == 0;
-       boolean buzz = number % 5 == 0;
+
+        boolean buzz = number % 5 == 0;
+        boolean fizz = number % 3 == 0;
 
         if(fizz && buzz) return "Fizz Buzz";
         if(fizz) return "Fizz";
@@ -17,10 +18,9 @@ public class FizzBuzz {
         int firstnum = number / 10;
         int secondnum = number % 10;
 
-        if(firstnum==1 && secondnum ==0 ){
+        if(firstnum == 1){
             return "mươi";
         }
-        return arr[firstnum] + " " + arr[secondnum];
+        return arr[firstnum] + " " + (secondnum==0 ? "mươi" : arr[secondnum]);
     }
 }
-

@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FizzBuzzTest {
@@ -12,10 +14,11 @@ class FizzBuzzTest {
     }
     @org.junit.jupiter.api.Test
     void testfizzBuzz1() {
-        int number = 35;
-        String expected = "Ba Năm";
+        int number = 30;
+        String expected = "Ba mươi";
 
         String result = FizzBuzz.WriteNum(number);
         assertEquals(result,expected);
     }
+    
 }
