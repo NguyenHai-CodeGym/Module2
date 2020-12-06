@@ -1,18 +1,17 @@
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class MyLinkedListTest {
     public static void main(String[] args) {
         MyLinkedList linkedList = new MyLinkedList(0);
         linkedList.addLast(1);
-        linkedList.addLast("hai");
+        linkedList.addLast(2);
         linkedList.addLast(3);
-        linkedList.addLast(4);
-        linkedList.addLast(5);
 
-        System.out.println(linkedList.get(2));
 
-        System.out.println(linkedList.getLast());
-
+        System.out.println(linkedList.size());
+        linkedList.printList();
+        Scanner
 
     }
 }

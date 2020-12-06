@@ -1,13 +1,13 @@
 public class MyLinkedList<E> {
     private Node head;
-    private int numNodes;
+    private int numNodes=0;
 
     public MyLinkedList(Object data) {
         head = new Node(data);
         numNodes=1;
     }
 
-//    add index & Element
+    //    add index & Element
     public void add (int index, E elements){
         Node temp = head;
         Node holder;
@@ -21,36 +21,36 @@ public class MyLinkedList<E> {
         numNodes++;
     }
 
-//    addFirst
+    //    addFirst
     public void addFirst(E elements){
         Node temp = head;
         head = new Node(elements);
         head.next = temp;
         numNodes++;
     }
-//    addLast
+    //    addLast
     public void addLast(E elements){
         add(numNodes,elements);
     }
-//    Remove Index E
+    //    Remove Index E
     public E remove(int index){
         Node temp = head;
         E result;
-       if(index == 0 || index == numNodes){
-           System.out.println("Can't remove");
-           return  null;
-       }else{
-           for(int i=0;i<index-1;i++){
-               temp = temp.next;
-           }
+        if(index == 0 || index == numNodes){
+            System.out.println("Can't remove");
+            return  null;
+        }else{
+            for(int i=0;i<index-1;i++){
+                temp = temp.next;
+            }
             result = (E) temp.next.data;
-           temp.next = temp.next.next;
-       }
-       numNodes--;
-       return result;
+            temp.next = temp.next.next;
+        }
+        numNodes--;
+        return result;
 
     }
-//    remove Object
+    //    remove Object
     public boolean remove(Object elements){
         Node temp = head;
         for(int i=0;i<numNodes-1;i++){
@@ -62,11 +62,11 @@ public class MyLinkedList<E> {
         }
         return false;
     }
-//    size
+    //    size
     public int size(){
-        return numNodes+1;
+        return numNodes;
     }
-// IndexOf
+    // IndexOf
     public int indexOf(E elements){
         Node temp = head;
         for(int i=0;i<numNodes;i++){
@@ -77,11 +77,11 @@ public class MyLinkedList<E> {
         }
         return -1;
     }
-//    contains
+    //    contains
     public boolean contains(E elements){
         return indexOf(elements) != -1;
     }
-//    Get Index
+    //    Get Index
     public E get(int index){
         Node temp = head;
         for(int i=0;i<index;i++){
@@ -89,15 +89,15 @@ public class MyLinkedList<E> {
         }
         return (E) temp.getData();
     }
-//    get Fist
+    //    get Fist
     public E getFirst() {
         return get(0);
     }
-//    getLast
+    //    getLast
     public E getLast(){
         return get(numNodes-1);
     }
-// Show
+    // Show
     public void printList() {
         Node temp = head;
         while(temp != null) {
