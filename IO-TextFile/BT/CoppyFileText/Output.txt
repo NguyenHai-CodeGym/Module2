@@ -1,0 +1,1 @@
+Trong java, Lớp BufferedReader được sử dụng để đọc văn bản từ một input stream dựa trên các ký tự (character stream). Nó có thể được sử dụng để đọc dữ liệu theo dòng (line by line) bằng phương thức readLine(). Nó giúp hiệu suất nhanh.
