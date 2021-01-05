@@ -1,75 +1,54 @@
-import java.io.Serializable;
-
-public class Students implements Serializable {
+public class Students {
     private int id;
     private String name;
-    private int age;
+    private String date;
     private String gender;
-    private double score1;
-    private double score2;
-    private double score3;
-    private double score4;
-    public boolean check1 = true;
-    public boolean check2 = true;
-    public boolean check3 = true;
-    public boolean check4 = true;
-    private double mediumScoure;
+    private double score1 = -1;
+    private double score2 = -1;
+    private double score3 = -1;
+    private double score4 = -1;
+    private double mediumScore;
 
-
-
-    public double getMediumScoure() {
-        return mediumScoure;
+    public double getMediumScore() {
+        return mediumScore;
     }
 
-    public void setMediumScoure() {
-        this.mediumScoure = (this.score1 + this.score2 + this.score3 *2 + this.score4 *3)/7;
+    public void setMediumScore() {
+        int count = 0;
+        double total = 0;
+        if(this.getScore1() > -1){
+            total += this.getScore1();
+            count += 1;
+        }
+        if(this.getScore2() > -1){
+            total += this.getScore2();
+            count += 1;
+        }
+        if(this.getScore3() > -1){
+            total += this.getScore3() *2;
+            count += 2;
+        }
+        if(this.getScore4() > -1){
+            total += this.getScore4() * 3;
+            count += 3;
+        }
+        this.mediumScore = total / count;
     }
 
-    public boolean isCheck1() {
-        return check1;
-    }
-
-    public boolean isCheck2() {
-        return check2;
-    }
-
-    public boolean isCheck3() {
-        return check3;
-    }
-
-    public boolean isCheck4() {
-        return check4;
-    }
-
-    public void setCheck1(boolean check1) {
-        this.check1 = check1;
-    }
-
-    public void setCheck2(boolean check2) {
-        this.check2 = check2;
-    }
-
-    public void setCheck3(boolean check3) {
-        this.check3 = check3;
-    }
-
-    public void setCheck4(boolean check4) {
-        this.check4 = check4;
-    }
-
-    public Students(int id, String name, int age, String gender) {
+    public Students(int id, String name, String date, String gender) {
         this.id = id;
         this.name = name;
-        this.age = age;
+        this.date = date;
         this.gender = gender;
     }
+    public Students(){}
 
-    public Students(double score1, double score2, double score3, double score4,double mediumScoure) {
+    public Students(double score1, double score2, double score3, double score4, double mediumScore) {
         this.score1 = score1;
         this.score2 = score2;
         this.score3 = score3;
         this.score4 = score4;
-        this.mediumScoure = mediumScoure;
+        this.mediumScore = mediumScore;
     }
 
     public int getId() {
@@ -88,12 +67,12 @@ public class Students implements Serializable {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public String getDate() {
+        return date;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getGender() {
@@ -137,19 +116,18 @@ public class Students implements Serializable {
     }
 
 
-
     @Override
     public String toString() {
         return "Students{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", age=" + age +
+                ", date='" + date + '\'' +
                 ", gender='" + gender + '\'' +
                 ", score1=" + score1 +
                 ", score2=" + score2 +
                 ", score3=" + score3 +
                 ", score4=" + score4 +
-                ", mediumScoure=" + mediumScoure +
+                ", mediumScore=" + mediumScore +
                 '}';
     }
 }
