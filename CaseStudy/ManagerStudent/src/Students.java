@@ -43,14 +43,6 @@ public class Students {
     }
     public Students(){}
 
-    public Students(double score1, double score2, double score3, double score4, double mediumScore) {
-        this.score1 = score1;
-        this.score2 = score2;
-        this.score3 = score3;
-        this.score4 = score4;
-        this.mediumScore = mediumScore;
-    }
-
     public int getId() {
         return id;
     }

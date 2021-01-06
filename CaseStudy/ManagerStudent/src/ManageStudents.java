@@ -1,4 +1,9 @@
 import com.github.cliftonlabs.json_simple.JsonObject;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -6,10 +11,35 @@ import java.util.Comparator;
 public class ManageStudents {
     CheckValidate check = new CheckValidate();
     Students students = new Students();
-    ArrayList<Students> studentList = new ArrayList<>();
+    static ArrayList<Students> studentList = new ArrayList<>();
     ArrayList<Students> tempStudentList = new ArrayList<>();
-    int id = 1;
+    static int id = 1;
     int choice = -1;
+    static Gson gson = new Gson();
+
+//    Load FIle
+    static {
+        try (Reader reader = new FileReader("students.json")) {
+            Type classOfT = new TypeToken<ArrayList<Students>>() {
+            }.getType();
+            studentList = gson.fromJson(reader, classOfT);
+            if (studentList == null) {
+                studentList = new ArrayList<>();
+            } else {
+                int maxId = -1;
+                for (Students st : studentList) {
+                    if (st.getId() > maxId) {
+                        maxId = st.getId();
+                    }
+                }
+                id = maxId + 1;
+            }
+        } catch (IOException e) {
+            new ArrayList<Students>();
+            id = 1;
+        }
+    }
+
 
     //    menu
     public void initMenu() {
@@ -50,6 +80,7 @@ public class ManageStudents {
         }
         return null;
     }
+
     //    Tìm tên trong danh sách
     public void findName(String name) {
         for (Students s : studentList) {
@@ -58,6 +89,7 @@ public class ManageStudents {
             }
         }
     }
+
     //    hiển thị
     public void showList(ArrayList<Students> list) {
         System.out.format("%-5s | ", "ID");
@@ -76,24 +108,27 @@ public class ManageStudents {
             System.out.format("%-60s | ", student.getName());
             System.out.format("%-10s | ", student.getDate());
             System.out.format("%-10s | ", student.getGender());
-            System.out.format("%-10.1f | ", student.getScore1());
-            System.out.format("%-10.1f | ", student.getScore2());
-            System.out.format("%-10.1f | ", student.getScore3());
-            System.out.format("%-10.1f | ", student.getScore4());
-            System.out.format("%-20.1f | ", student.getMediumScore());
+            System.out.format("%-10s | ", student.getScore1() != -1 ? student.getScore1() : "");
+            System.out.format("%-10s | ", student.getScore2() != -1 ? student.getScore2() : "");
+            System.out.format("%-10s | ", student.getScore3() != -1 ? student.getScore3() : "");
+            System.out.format("%-10s | ", student.getScore4() != -1 ? student.getScore4() : "");
+            System.out.format("%-20.2f| ", student.getMediumScore());
             System.out.println("\n");
         }
     }
+
     //    thêm mới học viên
     public void addStudent() {
         System.out.println("------THÊM HỌC VIÊN MỚI-------");
         String name = check.checkName("Nhập tên: ");
         String date = check.checkDate("Nhập ngày sinh: ");
         String gender = check.checkGender("Nhập giới tính: ");
-        students = new Students(id++, name, date, gender);
+        students = new Students(id++,name, date, gender);
         studentList.add(students);
+        saveToFile();
         System.out.println("------DONE------");
     }
+
     //    Chỉnh sửa học viên
     public void editStudent() {
         System.out.println("-------SỬA THÔNG TIN HỌC VIÊN------");
@@ -121,21 +156,27 @@ public class ManageStudents {
                             String newName = check.checkName("Nhập tên mới: ");
                             checkID(id, studentList).setName(newName);
                             tempStudentList.clear();
+                            saveToFile();
                             System.out.println("-----DONE------");
                         }
                         case 2 -> {
                             String newDate = check.checkDate("Nhập ngày sinh mới: ");
                             checkID(id, studentList).setDate(newDate);
                             tempStudentList.clear();
+                            saveToFile();
                             System.out.println("-----DONE------");
                         }
                         case 3 -> {
                             String newGender = check.checkGender("Nhập giới tính mới: ");
                             checkID(id, studentList).setGender(newGender);
                             tempStudentList.clear();
+                            saveToFile();
                             System.out.println("-----DONE------");
                         }
-                        case 4 -> initMenu();
+                        case 4 -> {
+                            initMenu();
+                            tempStudentList.clear();
+                        }
                         case 0 -> {
                             System.out.println("-----GOODBYE-----");
                             System.exit(0);
@@ -145,7 +186,6 @@ public class ManageStudents {
             }
         }
     }
-
     //    remove student
     public void removeStudent() {
         System.out.println("------XÓA HỌC VIÊN-----");
@@ -165,6 +205,7 @@ public class ManageStudents {
                 if (choice == 1) {
                     studentList.remove(checkID(id, studentList));
                     tempStudentList.clear();
+                    saveToFile();
                     System.out.println("------DONE-----");
                 }
             }
@@ -201,6 +242,7 @@ public class ManageStudents {
                                 checkID(id, studentList).setScore1(score1);
                                 checkID(id, studentList).setMediumScore();
                                 tempStudentList.clear();
+                                saveToFile();
                                 System.out.println("-----DONE-----");
                                 break;
                             }
@@ -212,6 +254,7 @@ public class ManageStudents {
                                 checkID(id, studentList).setScore2(score2);
                                 checkID(id, studentList).setMediumScore();
                                 tempStudentList.clear();
+                                saveToFile();
                                 System.out.println("-----DONE-----");
                                 break;
                             }
@@ -223,6 +266,7 @@ public class ManageStudents {
                                 checkID(id, studentList).setScore3(score3);
                                 checkID(id, studentList).setMediumScore();
                                 tempStudentList.clear();
+                                saveToFile();
                                 System.out.println("-----DONE-----");
                                 break;
                             }
@@ -234,6 +278,7 @@ public class ManageStudents {
                                 checkID(id, studentList).setScore4(score4);
                                 checkID(id, studentList).setMediumScore();
                                 tempStudentList.clear();
+                                saveToFile();
                                 System.out.println("-----DONE-----");
                                 break;
                             }
@@ -250,6 +295,7 @@ public class ManageStudents {
             }
         }
     }
+
     //    add Seri
     public void addSeri() {
         System.out.println("------NHẬP ĐIỂM------");
@@ -268,6 +314,7 @@ public class ManageStudents {
                         double score1 = check.checkSoure("Nhập điểm của sinh viên " + s.getName());
                         s.setScore1(score1);
                         s.setMediumScore();
+                        saveToFile();
                     } else {
                         System.out.println("Điểm của sinh viên " + s.getName() + " đã được thiết lập trước");
                     }
@@ -279,6 +326,7 @@ public class ManageStudents {
                         double score2 = check.checkSoure("Nhập điểm của sinh viên " + s.getName());
                         s.setScore2(score2);
                         s.setMediumScore();
+                        saveToFile();
                     } else {
                         System.out.println("Điểm của sinh viên " + s.getName() + " đã được thiết lập trước");
                     }
@@ -290,6 +338,7 @@ public class ManageStudents {
                         double score3 = check.checkSoure("Nhập điểm của sinh viên " + s.getName());
                         s.setScore3(score3);
                         s.setMediumScore();
+                        saveToFile();
                     } else {
                         System.out.println("Điểm của sinh viên " + s.getName() + " đã được thiết lập trước");
                     }
@@ -302,6 +351,7 @@ public class ManageStudents {
                         double score4 = check.checkSoure("Nhập điểm của sinh viên " + s.getName());
                         s.setScore4(score4);
                         s.setMediumScore();
+                        saveToFile();
                     } else {
                         System.out.println("Điểm của sinh viên " + s.getName() + " đã được thiết lập trước");
                     }
@@ -346,6 +396,7 @@ public class ManageStudents {
                                 checkID(id, studentList).setScore1(newScore1);
                                 checkID(id, studentList).setMediumScore();
                                 tempStudentList.clear();
+                                saveToFile();
                                 System.out.println("-------DONE------");
                                 break;
                             } else {
@@ -358,6 +409,7 @@ public class ManageStudents {
                                 checkID(id, studentList).setScore2(newScore2);
                                 checkID(id, studentList).setMediumScore();
                                 tempStudentList.clear();
+                                saveToFile();
                                 System.out.println("-------DONE------");
                                 break;
                             } else {
@@ -370,6 +422,7 @@ public class ManageStudents {
                                 checkID(id, studentList).setScore3(newScore3);
                                 checkID(id, studentList).setMediumScore();
                                 tempStudentList.clear();
+                                saveToFile();
                                 System.out.println("-------DONE------");
                                 break;
                             } else {
@@ -382,6 +435,7 @@ public class ManageStudents {
                                 checkID(id, studentList).setScore4(newScore4);
                                 checkID(id, studentList).setMediumScore();
                                 tempStudentList.clear();
+                                saveToFile();
                                 System.out.println("-------DONE------");
                                 break;
                             } else {
@@ -399,6 +453,7 @@ public class ManageStudents {
             }
         }
     }
+
     //    sap xep
     public void sortStudent() {
         Collections.sort(studentList, new Comparator<Students>() {
@@ -407,5 +462,13 @@ public class ManageStudents {
                 return o1.getMediumScore() < o2.getMediumScore() ? 1 : -1;
             }
         });
+    }
+// save file
+    public void saveToFile() {
+        try (FileWriter fileWriter = new FileWriter("students.json")) {
+            gson.toJson(studentList, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
