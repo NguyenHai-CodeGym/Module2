@@ -1,13 +1,13 @@
 public class Students {
+    static int i = 1;
     private int id;
-    private String name;
-    private String date;
-    private String gender;
-    private double score1 = -1;
-    private double score2 = -1;
-    private double score3 = -1;
-    private double score4 = -1;
-    private double mediumScore;
+    private String name, date, gender;
+    private double score1 = -1, score2 = -1, score3 = -1, score4 = -1;
+    private double mediumScore = -1;
+
+
+    public Students() {
+    }
 
     public double getMediumScore() {
         return mediumScore;
@@ -16,19 +16,19 @@ public class Students {
     public void setMediumScore() {
         int count = 0;
         double total = 0;
-        if(this.getScore1() > -1){
+        if (this.getScore1() > -1) {
             total += this.getScore1();
             count += 1;
         }
-        if(this.getScore2() > -1){
+        if (this.getScore2() > -1) {
             total += this.getScore2();
             count += 1;
         }
-        if(this.getScore3() > -1){
-            total += this.getScore3() *2;
+        if (this.getScore3() > -1) {
+            total += this.getScore3() * 2;
             count += 2;
         }
-        if(this.getScore4() > -1){
+        if (this.getScore4() > -1) {
             total += this.getScore4() * 3;
             count += 3;
         }
@@ -41,14 +41,10 @@ public class Students {
         this.date = date;
         this.gender = gender;
     }
-    public Students(){}
+
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

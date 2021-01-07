@@ -36,24 +36,6 @@ public class CheckValidate {
             return checkName(mess);
         }
     }
-
-    //    check age
-    public int checkAge(String mess) {
-        System.out.println(mess);
-        try {
-            int age = Integer.parseInt(sc.nextLine().trim());
-            if (age <= 0 || age > 120) {
-                System.out.println("Tuổi không hợp lệ vui lòng nhập lại: ");
-                return checkAge(mess);
-            } else {
-                return age;
-            }
-        } catch (Exception e) {
-            System.out.println("Không hợp lệ...!!!!");
-            return checkAge(mess);
-        }
-    }
-
     //    check gender
     public String checkGender(String mess) {
         System.out.println(mess);
@@ -76,7 +58,7 @@ public class CheckValidate {
         System.out.println(mess);
         try {
             double soure = Double.parseDouble(sc.nextLine());
-            if (soure < 0 || soure > 100) {
+            if (soure < 0 || soure > 10) {
                 System.out.println("Điểm không hợp lệ");
                 System.out.println("Vui lòng nhập lại");
                 return checkSoure(mess);
@@ -100,5 +82,4 @@ public class CheckValidate {
             return checkDate(mess);
         }
     }
-
 }
