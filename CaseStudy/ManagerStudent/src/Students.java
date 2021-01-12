@@ -1,6 +1,5 @@
 public class Students {
-    static int i = 1;
-    private int id;
+    private int id = 1;
     private String name, date, gender;
     private double score1 = -1, score2 = -1, score3 = -1, score4 = -1;
     private double mediumScore = -1;

@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class ManageStudents {
+    public static final String SEPARATOR = "+------+-------------------------------------------------------------+------------+-----------+-----------+-----------+-----------+-----------+----------------+";
     CheckValidate check = new CheckValidate();
     Students students = new Students();
     static ArrayList<Students> studentList = new ArrayList<>();
@@ -64,7 +65,7 @@ public class ManageStudents {
                 case 6 -> addSeri();
                 case 7 -> editScore();
                 case 8 -> sortStudent();
-                case 0 -> exitMenu("-------GOODBYE");
+                case 0 -> exitMenu("-------GOODBYE------");
             }
         }
     }
@@ -114,29 +115,30 @@ public class ManageStudents {
 
     //    hiển thị
     public void showList(ArrayList<Students> list) {
-        System.out.format("%-5s |", " ID");
-        System.out.format("%-60s |", " Name");
-        System.out.format("%-10s |", " BIRTHDAY");
-        System.out.format("%-10s |", " GENDER");
-        System.out.format("%-10s |", " SCOURE1");
-        System.out.format("%-10s |", " SCOURE2");
-        System.out.format("%-10s |", " SCOURE3");
-        System.out.format("%-10s |", " SCOURE4");
-        System.out.format("%-20s |", " MEDIUM SCOURE");
-        System.out.println("\n");
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println(SEPARATOR);
+        System.out.format("|%-5s |", "  ID");
+        System.out.format("%-60s |", " FULL NAME");
+        System.out.format("%-11s |", "  BIRTHDAY");
+        System.out.format("%-10s |", "  GENDER");
+        System.out.format("%-10s |", "  SCORE1");
+        System.out.format("%-10s |", "  SCORE2");
+        System.out.format("%-10s |", "  SCORE3");
+        System.out.format("%-10s |", "  SCORE4");
+        System.out.format("%-15s |", "  MEDIUM SCORE");
+        System.out.print("\n");
+        System.out.println(SEPARATOR);
         for (Students student : list) {
-            System.out.format("%-5d |", student.getId());
+            System.out.format("|%-1s %-3d |","",student.getId());
             System.out.format("%-60s |", student.getName());
-            System.out.format("%-10s |", student.getDate());
-            System.out.format("%-10s |", student.getGender());
-            System.out.format(student.getScore1() != -1 ? "%-10.2f |" : "%-10s |",student.getScore1() != -1 ? student.getScore1() : "");
-            System.out.format(student.getScore2() != -1 ? "%-10.2f |" : "%-10s |", student.getScore2() != -1 ? student.getScore2() : "");
-            System.out.format(student.getScore3() != -1 ? "%-10.2f |" : "%-10s |", student.getScore3() != -1 ? student.getScore3() : "");
-            System.out.format(student.getScore4() != -1 ? "%-10.2f |" : "%-10s |", student.getScore4() != -1 ? student.getScore4() : "");
-            System.out.format(student.getMediumScore() != -1 ? "%-20.2f |" : "%-20s |", student.getMediumScore() != -1 ? student.getMediumScore() : "");
-            System.out.println("\n");
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.format(" %-10s |",  student.getDate());
+            System.out.format("%-10s |","   " + student.getGender());
+            System.out.format(student.getScore1() != -1 ? "   %-7.2f |" : "%-10s |", student.getScore1() != -1 ? student.getScore1() : "");
+            System.out.format(student.getScore2() != -1 ? "   %-7.2f |" : "%-10s |", student.getScore2() != -1 ? student.getScore2() : "");
+            System.out.format(student.getScore3() != -1 ? "   %-7.2f |" : "%-10s |", student.getScore3() != -1 ? student.getScore3() : "");
+            System.out.format(student.getScore4() != -1 ? "   %-7.2f |" : "%-10s |", student.getScore4() != -1 ? student.getScore4() : "");
+            System.out.format(student.getMediumScore() != -1 ? "      %-9.2f |" : "%-15s |", student.getMediumScore() != -1 ? student.getMediumScore() : "");
+            System.out.print("\n");
+            System.out.println(SEPARATOR);
         }
     }
 
@@ -146,7 +148,7 @@ public class ManageStudents {
         String name = check.checkName("Nhập tên: ");
         String date = check.checkDate("Nhập ngày sinh: ");
         String gender = check.checkGender("Nhập giới tính: ");
-        students = new Students(id++, name, date, gender);
+        students = new Students(++id, name, date, gender);
         studentList.add(students);
         saveToFile();
         System.out.println("------DONE------");
@@ -359,8 +361,9 @@ public class ManageStudents {
                         s.setMediumScore();
                         saveToFile();
                         System.out.println("------DONE-------");
+                    } else {
+                        System.out.println("Điểm của sinh viên " + s.getName() + " đã được thiết lập trước");
                     }
-                    System.out.println("Điểm của sinh viên " + s.getName() + " đã được thiết lập trước");
                 }
                 break;
             case 3:

@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CheckValidate {
+    private static final String VIETNAMESE_REGEX = "a-zA-ZàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbđĐèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆìÌỉỈĩĨíÍịỊòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰỳỲỷỶỹỸýÝỵỴ";
+    private static final Pattern pattern = Pattern.compile("^[\\pL\\pZ]{2,20}$");
      Scanner sc = new Scanner(System.in);
 
     //    check Number
@@ -27,7 +29,6 @@ public class CheckValidate {
     public String checkName(String mess) {
         System.out.println(mess);
         String name = sc.nextLine().trim();
-        Pattern pattern = Pattern.compile("^[a-zA-z\\s]{2,50}$");
         Matcher matcher = pattern.matcher(name);
         if (matcher.matches()) {
             return name.toUpperCase().replaceAll("\\s+", " ");
@@ -76,6 +77,11 @@ public class CheckValidate {
             System.out.println(mess);
             System.out.println("YYYY-MM-DD");
             Date date=Date.valueOf(sc.nextLine());
+            long time=System.currentTimeMillis();
+            Date dateCurrent=new Date(time);
+            if(date.toString().compareTo(dateCurrent.toString())>=0){
+                return checkDate(mess);
+            }
             return date.toString();
         }catch (Exception e){
             System.out.println("YYYY-MM-DD");
